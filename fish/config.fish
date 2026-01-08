@@ -15,11 +15,6 @@ alias ..... 'cd ../../../../'
 alias	o "xdg-open"
 alias	cls "clear"
 
-if test "$TERM" = "xterm-ghostty"
-    # ghostty can't open relative paths that don't start with ".."
-    alias fd "fd --format './{}'"
-end
-
 abbr --add --position anywhere L '| less'
 abbr --add re-ne --set-cursor 'readelf --all % | rg NEEDED'
 abbr --add re-rp --set-cursor 'readelf --all % | rg "RUNPATH|RPATH"'
