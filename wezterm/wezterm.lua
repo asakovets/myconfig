@@ -18,6 +18,10 @@ config.hide_tab_bar_if_only_one_tab = true
 config.quick_select_remove_styling = true
 config.warn_about_missing_glyphs = false
 
+if IS_WINDOWS then
+    config.default_prog = { 'pwsh.exe', '-NoLogo' }
+end
+
 -- config.window_background_opacity = 0.85
 -- config.font_size = 13
 -- config.font = wezterm.font("jetbrains mono", { weight = "Regular" })
@@ -75,5 +79,37 @@ config.mouse_bindings = {
         action = act.ScrollByLine(3),
     },
 }
+
+if IS_WINDOWS then
+    local launch_menu = {}
+    local ok, stdout, stderr =
+        wezterm.run_child_process {
+        "C:/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe",
+        "-nologo",
+        "-format",
+        "json"
+    }
+
+    if ok then
+        for _, vs in ipairs(wezterm.serde.json_decode(stdout)) do
+            local installPath = vs["installationPath"]
+            local productLine = vs["catalog"]["productLineVersion"]
+            local vcvarsPath = installPath .. "\\VC\\Auxiliary\\Build\\vcvars64.bat"
+            table.insert(
+                launch_menu,
+                {
+                    label = "x64 Native Tools VS " .. productLine,
+                    args = {
+                        "cmd.exe",
+                        "/k",
+                        vcvarsPath
+                    }
+                }
+            )
+        end
+    end
+
+    config.launch_menu = launch_menu
+end
 
 return config
