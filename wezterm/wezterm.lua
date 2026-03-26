@@ -1,10 +1,16 @@
 local wezterm = require("wezterm")
+local mux = wezterm.mux
 local act = wezterm.action
 local config = wezterm.config_builder()
 
 local IS_MAC = wezterm.target_triple:find("darwin") ~= nil
 local IS_WINDOWS = wezterm.target_triple:find("windows") ~= nil
 local IS_LINUX = wezterm.target_triple:find("linux") ~= nil
+
+-- wezterm.on('gui-startup', function(cmd)
+--   local tab, pane, window = mux.spawn_window(cmd or {})
+--   window:gui_window():maximize()
+-- end)
 
 config.enable_scroll_bar = true
 config.enable_tab_bar = true
@@ -15,6 +21,7 @@ config.warn_about_missing_glyphs = false
 -- config.window_background_opacity = 0.85
 -- config.font_size = 13
 -- config.font = wezterm.font("jetbrains mono", { weight = "Regular" })
+-- config.color_scheme = 'Solarized (light) (terminal.sexy)'
 
 local f,err = loadfile(wezterm.config_dir.."/wezterm-local.lua")
 if err then
@@ -29,6 +36,14 @@ config.keys = {
     { key = "}", mods = "SHIFT|ALT", action = act.ActivateTabRelative(1) },
     { key = "n", mods = "LEADER", action = act.SpawnTab("CurrentPaneDomain") },
     { key = ",", mods = "CTRL|LEADER", action = act.SendKey({ key = ",", mods = "CTRL" }) },
+
+    { key = "l", mods = "ALT", action = act.ShowLauncher },
+    { key = "m", mods = "LEADER", action = wezterm.action_callback(function(win, pane)
+        win:maximize()
+    end) },
+    { key = "f", mods = "LEADER", action = wezterm.action_callback(function(win, pane)
+        win:toggle_fullscreen()
+    end) },
 
     --= Panes
     { key = "b", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
