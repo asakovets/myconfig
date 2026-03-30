@@ -78,6 +78,11 @@ config.mouse_bindings = {
         event = { Down = { streak = 1, button = { WheelDown = 1 } } },
         action = act.ScrollByLine(3),
     },
+    {
+        event = { Down = { streak = 3, button = 'Left' } },
+        action = wezterm.action.SelectTextAtMouseCursor 'SemanticZone',
+        mods = 'NONE',
+    },
 }
 
 if IS_WINDOWS then
