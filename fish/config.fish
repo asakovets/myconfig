@@ -38,3 +38,4 @@ if string length -q -- $TMUX
     end
 end
 
+set -x LS_COLORS
