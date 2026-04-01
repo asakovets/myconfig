@@ -17,12 +17,12 @@ winp() {
 
 if [[ "$#" -eq 1 && "$1" == "-n" ]]; then
 	dolink() {
-		echo "$2 -> ${repodir}/$1"
+		echo "$1 -> ${repodir}/$2"
 	}
 else
 	dolink() {
-		echo "$2 -> ${repodir}/$1"
-		ln -sf "${repodir}/$1" "$2"
+		echo "$1 -> ${repodir}/$2"
+		ln -sf "${repodir}/$2" "$1"
 	}
 
 fi
@@ -33,7 +33,7 @@ ens() {
 
 (macp || linuxp) &&
 	ens ~/.config/fish &&
-	dolink ~/.config/fish/fish.config fish/fish.config
+	dolink ~/.config/fish/config.fish fish/config.fish
 
 ens ~/.config/wezterm &&
 	dolink ~/.config/wezterm/wezterm.lua wezterm/wezterm.lua
