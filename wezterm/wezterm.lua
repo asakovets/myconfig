@@ -49,6 +49,8 @@ config.keys = {
         win:toggle_fullscreen()
     end) },
 
+    { key = "Home", mods = "SHIFT", action = act.ScrollToTop },
+
     --= Panes
     { key = "b", mods = "LEADER", action = act.SplitHorizontal({ domain = "CurrentPaneDomain" }) },
     { key = "v", mods = "LEADER", action = act.SplitVertical({ domain = "CurrentPaneDomain" }) },
