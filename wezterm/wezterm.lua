@@ -93,8 +93,9 @@ if IS_WINDOWS then
         wezterm.run_child_process {
         "C:/Program Files (x86)/Microsoft Visual Studio/Installer/vswhere.exe",
         "-nologo",
+        "-utf8",
         "-format",
-        "json"
+        "json",
     }
 
     if ok then
